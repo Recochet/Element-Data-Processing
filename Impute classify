@@ -1,0 +1,26 @@
+# Perform PCA and plot the explained variance ratio
+pca = PCA()
+pca.fit(drop_imputed_df)
+
+plt.plot(pca.explained_variance_ratio_)
+plt.xlabel('Number of Components')
+plt.ylabel('Explained Variance Ratio')
+plt.show()
+plt.savefig('plot')
+
+# Perform PCA
+pca = PCA(n_components=2)
+pca.fit(drop_imputed_df)
+pca_df = pd.DataFrame(pca.transform(drop_imputed_df), columns=['PC1', 'PC2'])
+
+# Add the Code Prefix column to the PCA dataframe
+pca_df['Code Prefix'] = drop_imputed_df['Code Prefix']
+
+# Save the PCA dataframe to a CSV file
+pca_df.to_csv('pca_data.csv', index=False)
+
+# Print explained variance
+print('Explained variance:', sum(pca.explained_variance_ratio_))
+print('Explained variance ratios:', pca.explained_variance_ratio_)
+#Explained variance: 0.7822180618690142
+#Explained variance ratios: [0.59786915 0.18434891]
